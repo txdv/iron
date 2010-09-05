@@ -1,0 +1,61 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "engine", "engine", "{9E423098-8FC1-4AA3-9742-9E559F26D27A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "libs", "libs", "{FF159896-32A1-4F72-B711-6AC45A2EC77B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BSPUtils", "engine\libs\BSPUtils\BSPUtils.csproj", "{57CDEF6B-0A16-4ECA-A9F3-C525984389C7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WADUtils", "engine\libs\WADUtils\WADUtils.csproj", "{F412E464-1625-4BA5-A309-BBFFF0F4E413}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UtilsTest", "engine\libs\UtilsTest\UtilsTest.csproj", "{C9FBC37A-8A53-47AE-956A-6B6FE4C6BF00}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "server", "server", "{16DD68B9-F490-42A5-B3E5-A68163234A77}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "client", "client", "{927FA16A-AB95-4E6F-8D2F-E7A1590B4AFD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "mods", "mods", "{C5BFC96D-E589-411C-A576-6A7FA893E698}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{57CDEF6B-0A16-4ECA-A9F3-C525984389C7}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{57CDEF6B-0A16-4ECA-A9F3-C525984389C7}.Debug|x86.Build.0 = Debug|Any CPU
+		{57CDEF6B-0A16-4ECA-A9F3-C525984389C7}.Release|x86.ActiveCfg = Release|Any CPU
+		{57CDEF6B-0A16-4ECA-A9F3-C525984389C7}.Release|x86.Build.0 = Release|Any CPU
+		{C9FBC37A-8A53-47AE-956A-6B6FE4C6BF00}.Debug|x86.ActiveCfg = Debug|x86
+		{C9FBC37A-8A53-47AE-956A-6B6FE4C6BF00}.Debug|x86.Build.0 = Debug|x86
+		{C9FBC37A-8A53-47AE-956A-6B6FE4C6BF00}.Release|x86.ActiveCfg = Release|x86
+		{C9FBC37A-8A53-47AE-956A-6B6FE4C6BF00}.Release|x86.Build.0 = Release|x86
+		{F412E464-1625-4BA5-A309-BBFFF0F4E413}.Debug|x86.ActiveCfg = Debug|x86
+		{F412E464-1625-4BA5-A309-BBFFF0F4E413}.Debug|x86.Build.0 = Debug|x86
+		{F412E464-1625-4BA5-A309-BBFFF0F4E413}.Release|x86.ActiveCfg = Release|x86
+		{F412E464-1625-4BA5-A309-BBFFF0F4E413}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{FF159896-32A1-4F72-B711-6AC45A2EC77B} = {9E423098-8FC1-4AA3-9742-9E559F26D27A}
+		{16DD68B9-F490-42A5-B3E5-A68163234A77} = {9E423098-8FC1-4AA3-9742-9E559F26D27A}
+		{927FA16A-AB95-4E6F-8D2F-E7A1590B4AFD} = {9E423098-8FC1-4AA3-9742-9E559F26D27A}
+		{57CDEF6B-0A16-4ECA-A9F3-C525984389C7} = {FF159896-32A1-4F72-B711-6AC45A2EC77B}
+		{F412E464-1625-4BA5-A309-BBFFF0F4E413} = {FF159896-32A1-4F72-B711-6AC45A2EC77B}
+		{C9FBC37A-8A53-47AE-956A-6B6FE4C6BF00} = {FF159896-32A1-4F72-B711-6AC45A2EC77B}
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = engine\libs\UtilsTest\UtilsTest.csproj
+		Policies = $0
+		$0.StandardHeader = $1
+		$1.Text = @\n    This file is part of Iron.\n    Iron is an extensive game engine written in C# aiming to\n    utilize already exitent game content \n\n    Copyright (C) 2010  Andrius Bentkus\n    Copyright (C) 2010  Giedrius Graževičius\n\n    Iron is free software: you can redistribute it and/or modify\n    it under the terms of the GNU General Public License as published by\n    the Free Software Foundation, either version 3 of the License, or\n    (at your option) any later version.\n\n    Iron is distributed in the hope that it will be useful,\n    but WITHOUT ANY WARRANTY; without even the implied warranty of\n    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n    GNU General Public License for more details.\n\n    You should have received a copy of the GNU General Public License\n    along with Iron.  If not, see <http://www.gnu.org/licenses/>.\n
+		$1.inheritsSet = Apache2License
+		$0.TextStylePolicy = $2
+		$2.inheritsSet = null
+		$2.scope = text/x-csharp
+		$0.CSharpFormattingPolicy = $3
+		$3.inheritsSet = Mono
+		$3.inheritsScope = text/x-csharp
+		$3.scope = text/x-csharp
+	EndGlobalSection
+EndGlobal
