@@ -20,24 +20,13 @@
 //     along with Iron.  If not, see <http://www.gnu.org/licenses/>.
 // 
 using System;
-
-namespace IronClient
+namespace client
 {
-	class MainClass
+	public enum MeshType
 	{
-		
-		public static void Main (string[] args)
-		{
-			Renderer renderer = new IronClient.OpenGL.OGLRenderer();
-			
-			if (!renderer.CreateWindow(800, 600, false))
-				return;
-			
-			while (renderer.IsOpen()) {
-				renderer.Clear();
-				renderer.Render();
-			}
-		}
+		Vertex,		// Mesh buffer is composed of vertices
+		VertexTexture, // Vertices and one texture unit
+		VertexTexture2, // Vertices and two texture units
 	}
 }
 

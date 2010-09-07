@@ -23,21 +23,14 @@ using System;
 
 namespace IronClient
 {
-	class MainClass
+	public interface Renderer
 	{
+		bool CreateWindow(int width, int height, bool fullscreen);
+		void Close();
+		bool IsOpen();
 		
-		public static void Main (string[] args)
-		{
-			Renderer renderer = new IronClient.OpenGL.OGLRenderer();
-			
-			if (!renderer.CreateWindow(800, 600, false))
-				return;
-			
-			while (renderer.IsOpen()) {
-				renderer.Clear();
-				renderer.Render();
-			}
-		}
+		void Render();
+		
 	}
 }
 

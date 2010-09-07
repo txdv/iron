@@ -20,23 +20,42 @@
 //     along with Iron.  If not, see <http://www.gnu.org/licenses/>.
 // 
 using System;
+using Tao.Glfw;
+using Tao.OpenGl;
 
-namespace IronClient
+namespace IronClient.OpenGL
 {
-	class MainClass
+	public class OGLRenderer : Renderer
 	{
-		
-		public static void Main (string[] args)
+		public OGLRenderer ()
 		{
-			Renderer renderer = new IronClient.OpenGL.OGLRenderer();
-			
-			if (!renderer.CreateWindow(800, 600, false))
-				return;
-			
-			while (renderer.IsOpen()) {
-				renderer.Clear();
-				renderer.Render();
+			Glfw.glfwInit();
+		}
+		
+		public bool CreateWindow(int width, int height, bool fullscreen) {
+			if (Glfw.glfwOpenWindow(width, height, 8, 8, 8, 0, 8, 0, fullscreen ? (Glfw.GLFW_FULLSCREEN) : (Glfw.GLFW_WINDOW)) == Gl.GL_FALSE) {
+				Glfw.glfwTerminate();
+				return false;
 			}
+			
+			Glfw.glfwSetWindowTitle("Iron");
+			Glfw.glfwEnable(Glfw.GLFW_KEY_REPEAT);
+			Glfw.glfwSwapInterval(0);
+			
+			return true;
+		}
+		
+		public bool IsOpen() {
+			return Glfw.glfwGetWindowParam(Glfw.GLFW_OPENED) == Gl.GL_TRUE;
+		}
+		
+		public void Close() {
+			Glfw.glfwTerminate();
+		}
+		
+		public void Render() {
+			Gl.glClear(Gl.GL_COLOR_BUFFER_BIT | Gl.GL_DEPTH_BUFFER_BIT);
+			Glfw.glfwSwapBuffers();
 		}
 	}
 }
