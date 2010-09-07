@@ -53,7 +53,7 @@ Global
 		{C9FBC37A-8A53-47AE-956A-6B6FE4C6BF00} = {FF159896-32A1-4F72-B711-6AC45A2EC77B}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = engine\libs\UtilsTest\UtilsTest.csproj
+		StartupItem = engine\client\client.csproj
 		Policies = $0
 		$0.StandardHeader = $1
 		$1.Text = @\n    This file is part of Iron.\n    Iron is an extensive game engine written in C# aiming to\n    utilize already exitent game content \n\n    Copyright (C) 2010  Andrius Bentkus\n    Copyright (C) 2010  Giedrius Graževičius\n\n    Iron is free software: you can redistribute it and/or modify\n    it under the terms of the GNU General Public License as published by\n    the Free Software Foundation, either version 3 of the License, or\n    (at your option) any later version.\n\n    Iron is distributed in the hope that it will be useful,\n    but WITHOUT ANY WARRANTY; without even the implied warranty of\n    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n    GNU General Public License for more details.\n\n    You should have received a copy of the GNU General Public License\n    along with Iron.  If not, see <http://www.gnu.org/licenses/>.\n

@@ -20,24 +20,10 @@
 //     along with Iron.  If not, see <http://www.gnu.org/licenses/>.
 // 
 using System;
-
-namespace IronClient
+namespace client
 {
-	class MainClass
+	public interface StaticMesh
 	{
-		
-		public static void Main (string[] args)
-		{
-			Renderer renderer = new IronClient.OpenGL.OGLRenderer();
-			
-			if (!renderer.CreateWindow(800, 600, false))
-				return;
-			
-			while (renderer.IsOpen()) {
-				renderer.Clear();
-				renderer.Render();
-			}
-		}
 	}
 }
 
