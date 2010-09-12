@@ -20,14 +20,40 @@
 //     along with Iron.  If not, see <http://www.gnu.org/licenses/>.
 // 
 using System;
+using System.IO;
+using System.Collections.Generic;
 
-namespace IronClient.Geometry
+namespace IronClient.VFS
 {
-	public enum MeshType
+	public class FileSystem
 	{
-		TRIANGLES,
-		QUADS,
-		POLYGON
+		private static FileSystem instance;
+		
+		public static FileSystem GetInstance() {
+			if (instance != null) 
+				return instance;
+			else return instance = new FileSystem();
+		}
+		
+		List<Archive> archives = new List<Archive>();
+		private FileSystem () {}
+		
+		public void AddArchive(Archive archive) {
+			archives.Add(archive);
+		}
+		
+		public void AddZipArchive(string path) {
+			archives.Add(new ZipArchive(path));
+		}
+		
+		public SizeStream Get(string path) {
+			SizeStream ret;
+			foreach (Archive archive in archives) {
+				if ((ret = archive.Get(path)) != null)
+					return ret;
+			}
+			return null;
+		}
 	}
 }
 

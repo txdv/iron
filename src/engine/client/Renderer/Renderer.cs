@@ -20,14 +20,21 @@
 //     along with Iron.  If not, see <http://www.gnu.org/licenses/>.
 // 
 using System;
+using IronClient.Geometry;
 
-namespace IronClient.Geometry
+namespace IronClient.Renderer
 {
-	public enum MeshType
+	public interface Renderer
 	{
-		TRIANGLES,
-		QUADS,
-		POLYGON
+		bool CreateWindow(int width, int height, bool fullscreen);
+		void Close();
+		bool IsOpen();
+		
+		void Clear();
+		void Render();
+		
+		void DrawStaticMesh(StaticMesh mesh);
+		
 	}
 }
 

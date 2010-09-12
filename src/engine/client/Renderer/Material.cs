@@ -21,13 +21,33 @@
 // 
 using System;
 
-namespace IronClient.Geometry
+namespace IronClient.Renderer
 {
-	public enum MeshType
+	public class Material
 	{
-		TRIANGLES,
-		QUADS,
-		POLYGON
+		public const int COLOR = 1;
+		public const int TEXTURE0 = 2;
+		public const int TEXTURE1 = 4;
+		
+		public int Type { get; set; } 
+		
+		private int texture0 = 0;
+		public int Texture0 { get { return texture0; }  }
+		
+		private int texture1 = 0;
+		public int Texture1 { get { return texture1; } }
+		
+		public int Color { get; set; }
+		
+		public Material(int type)
+		{
+			Type = type;
+		}
+		
+		public Material(int type, int texture0) {
+			Type = type;
+			this.texture0 = texture0;
+		}
 	}
 }
 
