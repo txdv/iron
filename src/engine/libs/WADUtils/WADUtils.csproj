@@ -36,4 +36,14 @@
     <Compile Include="WADParser.cs" />
     <Compile Include="AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BinaryExtensions\BinaryExtensions.csproj">
+      <Project>{397C08AC-61FF-40FB-B151-9721E15A2008}</Project>
+      <Name>BinaryExtensions</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+  </ItemGroup>
 </Project>

@@ -30,7 +30,31 @@ namespace Iron.WADUtilsConsole
 	{
 		public static void Main (string[] args)
 		{
-			FileStream fs = File.OpenRead("de_dust.bsp");
+			LoadBSPMap("de_dust.bsp");
+			Console.WriteLine ();
+			LoadWADFile("halflife.wad");
+		}
+		
+		public static void LoadWADFile(string filename)
+		{
+			Console.WriteLine("Parsing WAD file: {0}\n", filename);
+			FileStream fs = File.OpenRead(filename);
+			
+			WADParser wadp = new WADParser(fs);
+			Console.WriteLine("Files in directory: {0}", wadp.FileCount);
+			
+			wadp.OnLoadFile += delegate(WADFile file) { };
+			Console.WriteLine("Loading file information");
+			wadp.LoadFiles();
+			
+			fs.Close();
+			fs.Dispose();			
+		}
+		
+		
+		public static void LoadBSPMap(string file)
+		{
+			FileStream fs = File.OpenRead(file);
 			Console.WriteLine ("Parsing bsp file: {0}\n", fs.Name);
 			BSPParser p = new BSPParser(fs);
 			Console.WriteLine ("Loading Directory table");

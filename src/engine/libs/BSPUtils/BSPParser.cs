@@ -22,6 +22,7 @@
 using System;
 using System.IO;
 using System.Text;
+using Iron.BinaryExtensions;
 
 namespace Iron.BSPUtils
 {
@@ -29,42 +30,8 @@ namespace Iron.BSPUtils
 	 * GoldSrc has bsp map version 30(0x1E)
 	 */
 	
-	public static class BSPExtensions
+	public static class BinaryReaderExtensions
 	{
-		public static int BReadInt32(this BinaryReader br)
-		{
-			byte b1 = br.ReadByte();
-			byte b2 = br.ReadByte();
-			byte b3 = br.ReadByte();
-			byte b4 = br.ReadByte();
-			
-			return ((b4 << 28) | (b3 << 16) | (b2 << 8) | b1);
-		}
-		
-		public static uint BReadUInt32(this BinaryReader br)
-		{
-			byte b1 = br.ReadByte();
-			byte b2 = br.ReadByte();
-			byte b3 = br.ReadByte();
-			byte b4 = br.ReadByte();
-			
-			return (uint)((b4 << 28) | (b3 << 16) | (b2 << 8) | b1);
-		}
-		
-		public static short BReadInt16(this BinaryReader br)
-		{
-			byte b1 = br.ReadByte();
-			byte b2 = br.ReadByte();
-			return (short)((b2 << 8) | b1);
-		}
-		
-		public static ushort BReadUInt16(this BinaryReader br)
-		{
-			byte b1 = br.ReadByte();
-			byte b2 = br.ReadByte();
-			return (ushort)((b2 << 8) | b1);
-		}
-		
 		#region Struct Reader
 		
 		public static Vector3f ReadVector3f(this BinaryReader br)
@@ -428,8 +395,8 @@ namespace Iron.BSPUtils
 		//public delegate void LoadDirectoryTableDelegate();
 		public delegate void LoadEntitiesDelegate(string entities);
 		public delegate void LoadPlaneDelegate(Plane plane);
-		public delegate void LoadMipTexture(MipTexture texture);
-		public delegate void LoadVertex(Vector3f vertex);
+		public delegate void LoadMipTextureDelegate(MipTexture texture);
+		public delegate void LoadVertexDelegate(Vector3f vertex);
 		public delegate void LoadBSPNode(BSPNode node);
 		public delegate void LoadFaceTextureInfoDelegate(FaceTextureInfo textureInfo);
 		public delegate void LoadFaceDelegate(Face face);
@@ -446,8 +413,8 @@ namespace Iron.BSPUtils
 		//public event LoadDirectoryTableDelegate OnLoadDirectoryTable;
 		public event LoadEntitiesDelegate        OnLoadEntities;
 		public event LoadPlaneDelegate           OnLoadPlane;
-		public event LoadMipTexture              OnLoadMipTexture;
-		public event LoadVertex                  OnLoadVertex;
+		public event LoadMipTextureDelegate      OnLoadMipTexture;
+		public event LoadVertexDelegate          OnLoadVertex;
 		public event LoadBSPNode                 OnLoadBSPNode;
 		public event LoadFaceTextureInfoDelegate OnLoadFaceTextureInfo;
 		public event LoadFaceDelegate            OnLoadFace;
@@ -667,6 +634,8 @@ namespace Iron.BSPUtils
 		
 		#endregion
 		
+		#region Public Fields
+		
 		public int Version { get; protected set; }
 		public DirectoryEntry Entities { get; protected set; }
 		public DirectoryEntry Planes { get; protected set; }
@@ -684,6 +653,8 @@ namespace Iron.BSPUtils
 		public DirectoryEntry Edges { get; protected set; }
 		public DirectoryEntry EdgeList { get; protected set; }
 		public DirectoryEntry Models { get; protected set; }
+		
+		#endregion
 	}
 }
 
