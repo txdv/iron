@@ -41,10 +41,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\taoframework-2.1.0\bin\Tao.OpenGl.dll</HintPath>
     </Reference>
-    <Reference Include="Tao.OpenAl, Version=1.1.0.1, Culture=neutral, PublicKeyToken=a7579dda88828311">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\taoframework-2.1.0\bin\Tao.OpenAl.dll</HintPath>
-    </Reference>
     <Reference Include="Tao.Glfw, Version=2.6.0.0, Culture=neutral, PublicKeyToken=2bb092b6587e4402">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\taoframework-2.1.0\bin\Tao.Glfw.dll</HintPath>
@@ -54,38 +50,6 @@
       <HintPath>..\..\..\taoframework-2.1.0\bin\Tao.DevIl.dll</HintPath>
     </Reference>
     <Reference Include="ICSharpCode.SharpZipLib" />
-    <Reference Include="Tao.Cg, Version=2.0.0.0, Culture=neutral, PublicKeyToken=52fa5aba625fe731">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\taoframework-2.1.0\bin\Tao.Cg.dll</HintPath>
-    </Reference>
-    <Reference Include="Tao.FFmpeg, Version=0.4.9.0, Culture=neutral, PublicKeyToken=9c7a200e36c0094e">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\taoframework-2.1.0\bin\Tao.FFmpeg.dll</HintPath>
-    </Reference>
-    <Reference Include="Tao.FreeGlut, Version=2.4.0.2, Culture=neutral, PublicKeyToken=6e602a6ad6c0d06d">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\taoframework-2.1.0\bin\Tao.FreeGlut.dll</HintPath>
-    </Reference>
-    <Reference Include="Tao.Lua, Version=5.1.3.0, Culture=neutral, PublicKeyToken=9c7a200e36c0094e">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\taoframework-2.1.0\bin\Tao.Lua.dll</HintPath>
-    </Reference>
-    <Reference Include="Tao.Ode, Version=0.9.0.0, Culture=neutral, PublicKeyToken=e499629dc69cd531">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\taoframework-2.1.0\bin\Tao.Ode.dll</HintPath>
-    </Reference>
-    <Reference Include="Tao.PhysFs, Version=1.0.1.2, Culture=neutral, PublicKeyToken=9c7a200e36c0094e">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\taoframework-2.1.0\bin\Tao.PhysFs.dll</HintPath>
-    </Reference>
-    <Reference Include="Tao.Platform.Windows, Version=1.0.0.5, Culture=neutral, PublicKeyToken=701104b2da67a104">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\taoframework-2.1.0\bin\Tao.Platform.Windows.dll</HintPath>
-    </Reference>
-    <Reference Include="Tao.Sdl, Version=1.2.13.0, Culture=neutral, PublicKeyToken=9c7a200e36c0094e">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\taoframework-2.1.0\bin\Tao.Sdl.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Main.cs" />
@@ -112,5 +76,15 @@
     <Folder Include="Renderer\" />
     <Folder Include="Renderer\OpenGL\" />
     <Folder Include="VFS\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\libs\BSPUtils\BSPUtils.csproj">
+      <Project>{57CDEF6B-0A16-4ECA-A9F3-C525984389C7}</Project>
+      <Name>BSPUtils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\libs\BSPUtils\BSPUtils.csproj">
+      <Project>{57CDEF6B-0A16-4ECA-A9F3-C525984389C7}</Project>
+      <Name>BSPUtils</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>

@@ -116,6 +116,7 @@ namespace IronClient.Renderer.OpenGL
 				
 				Gl.glDisableClientState(Gl.GL_VERTEX_ARRAY);
 				Gl.glDisableClientState(Gl.GL_TEXTURE_COORD_ARRAY);
+				Gl.glDisable(Gl.GL_TEXTURE_2D);
 			} else throw new Exception("Unsupported material type");
 		}
 	}
