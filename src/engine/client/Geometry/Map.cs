@@ -20,14 +20,16 @@
 //     along with Iron.  If not, see <http://www.gnu.org/licenses/>.
 // 
 using System;
-
-namespace IronClient.Geometry
+namespace client
 {
-	public enum MeshType
+	public class Map
 	{
-		TRIANGLES,
-		QUADS,
-		POLYGON
+			
+		
+		public Map ()
+		{
+			
+		}
 	}
 }
 

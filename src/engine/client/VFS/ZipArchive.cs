@@ -20,14 +20,37 @@
 //     along with Iron.  If not, see <http://www.gnu.org/licenses/>.
 // 
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
 
-namespace IronClient.Geometry
+using ICSharpCode.SharpZipLib.Zip;
+
+namespace IronClient.VFS
 {
-	public enum MeshType
+	public class ZipArchive : Archive
 	{
-		TRIANGLES,
-		QUADS,
-		POLYGON
+		ZipFile zf;
+		
+		public ZipArchive (string filename)
+		{
+			zf = new ZipFile(filename);
+		}
+		
+		public List<String> GetEntries() {
+			List<String> ret = new List<String>();
+			
+			foreach (ZipEntry ze in zf) {
+				ret.Add(ze.Name);
+			}
+			
+			return ret;
+		}
+		
+		public SizeStream Get(string path) {
+			ZipEntry ze = zf.GetEntry(path);
+			return new SizeStream(zf.GetInputStream(ze), (int)ze.Size);
+		}
 	}
 }
 

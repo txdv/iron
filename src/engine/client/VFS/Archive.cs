@@ -20,17 +20,15 @@
 //     along with Iron.  If not, see <http://www.gnu.org/licenses/>.
 // 
 using System;
+using System.IO;
+using System.Collections.Generic;
 
-namespace IronClient
+namespace IronClient.VFS
 {
-	public interface Renderer
+	public interface Archive
 	{
-		bool CreateWindow(int width, int height, bool fullscreen);
-		void Close();
-		bool IsOpen();
-		
-		void Render();
-		
+		List<String> GetEntries();
+		SizeStream Get(string path);
 	}
 }
 

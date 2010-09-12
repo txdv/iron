@@ -20,14 +20,18 @@
 //     along with Iron.  If not, see <http://www.gnu.org/licenses/>.
 // 
 using System;
+using System.Runtime.InteropServices;
 
 namespace IronClient.Geometry
 {
-	public enum MeshType
+	[StructLayout(LayoutKind.Sequential)]
+	public struct TexCoord
 	{
-		TRIANGLES,
-		QUADS,
-		POLYGON
+		public TexCoord(float u, float v) {
+			this.u = u; this.v = v;
+		}
+		
+		public float u, v;
 	}
 }
 

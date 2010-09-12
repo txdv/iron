@@ -20,14 +20,28 @@
 //     along with Iron.  If not, see <http://www.gnu.org/licenses/>.
 // 
 using System;
+using System.IO;
 
-namespace IronClient.Geometry
+
+namespace IronClient.VFS
 {
-	public enum MeshType
+	public class ArchiveEntry
 	{
-		TRIANGLES,
-		QUADS,
-		POLYGON
+		public ArchiveEntry(String name, Stream istream) {
+			this.name = name;
+			this.inputStream = istream;
+		}
+		
+		private String name;
+		private Stream inputStream;
+		
+		public String Name { get { return name; } }
+		
+		public Stream InputStream {
+			get {
+				return inputStream;
+			}
+		}
 	}
 }
 

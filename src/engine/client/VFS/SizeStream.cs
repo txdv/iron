@@ -20,43 +20,23 @@
 //     along with Iron.  If not, see <http://www.gnu.org/licenses/>.
 // 
 using System;
-using Tao.Glfw;
-using Tao.OpenGl;
+using System.IO;
 
-namespace IronClient.OpenGL
+namespace IronClient.VFS
 {
-	public class OGLRenderer : Renderer
+	public class SizeStream
 	{
-		public OGLRenderer ()
+		private Stream inputStream;
+		private int size;
+		
+		public SizeStream (Stream stream, int size)
 		{
-			Glfw.glfwInit();
+			this.inputStream = stream;
+			this.size = size;
 		}
 		
-		public bool CreateWindow(int width, int height, bool fullscreen) {
-			if (Glfw.glfwOpenWindow(width, height, 8, 8, 8, 0, 8, 0, fullscreen ? (Glfw.GLFW_FULLSCREEN) : (Glfw.GLFW_WINDOW)) == Gl.GL_FALSE) {
-				Glfw.glfwTerminate();
-				return false;
-			}
-			
-			Glfw.glfwSetWindowTitle("Iron");
-			Glfw.glfwEnable(Glfw.GLFW_KEY_REPEAT);
-			Glfw.glfwSwapInterval(0);
-			
-			return true;
-		}
-		
-		public bool IsOpen() {
-			return Glfw.glfwGetWindowParam(Glfw.GLFW_OPENED) == Gl.GL_TRUE;
-		}
-		
-		public void Close() {
-			Glfw.glfwTerminate();
-		}
-		
-		public void Render() {
-			Gl.glClear(Gl.GL_COLOR_BUFFER_BIT | Gl.GL_DEPTH_BUFFER_BIT);
-			Glfw.glfwSwapBuffers();
-		}
+		public Stream InputStream {get { return inputStream; }}
+		public int Size {get { return size; }}
 	}
 }
 

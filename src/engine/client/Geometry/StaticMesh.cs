@@ -20,10 +20,23 @@
 //     along with Iron.  If not, see <http://www.gnu.org/licenses/>.
 // 
 using System;
-namespace client
+
+using IronClient.Renderer;
+
+namespace IronClient.Geometry
 {
-	public interface StaticMesh
+	public class StaticMesh
 	{
+		public int VBuffer;
+		public int T0Buffer;
+		public int T1Buffer;
+		
+		public MeshType MeshType;
+		
+		public Vertex[] vertices;
+		public TexCoord[] texCoords0;
+		public TexCoord[] texCoords1;
+		public Material Material { get; set; }
 	}
 }
 

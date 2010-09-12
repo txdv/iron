@@ -20,21 +20,42 @@
 //     along with Iron.  If not, see <http://www.gnu.org/licenses/>.
 // 
 using System;
+using System.IO;
+
+using IronClient.Geometry;
+using IronClient.Renderer;
+using IronClient.VFS;
 
 namespace IronClient
 {
 	class MainClass
 	{
-		
 		public static void Main (string[] args)
 		{
-			Renderer renderer = new IronClient.OpenGL.OGLRenderer();
+			IronClient.Renderer.Renderer renderer = new IronClient.Renderer.OpenGL.OGLRenderer();
 			
 			if (!renderer.CreateWindow(800, 600, false))
 				return;
+
+			StaticMesh mesh = new StaticMesh();
+			mesh.vertices = new Vertex[] { new Vertex(0.0f, 1.0f, 0.0f), new Vertex(-1.0f, -1.0f, 0.0f), 
+				new Vertex(1.0f, -1.0f, 0.0f)};
+			mesh.texCoords0 = new TexCoord[] { new TexCoord(0.5f, 0.0f), new TexCoord(0.0f, 1.0f), 
+				new TexCoord(1.0f, 1.0f) };
+			mesh.MeshType = MeshType.TRIANGLES;
 			
+			FileSystem fs = FileSystem.GetInstance();
+			fs.AddZipArchive("test.zip");
+			
+			Stream stream = new FileStream("testtex.png", FileMode.Open);
+			SizeStream ss = new SizeStream(stream, (int)stream.Length);
+			mesh.Material = MaterialManager.getInstance().CreateTextureMaterial(fs.Get("testtex.png"));
+			
+
 			while (renderer.IsOpen()) {
+				
 				renderer.Clear();
+				renderer.DrawStaticMesh(mesh);
 				renderer.Render();
 			}
 		}

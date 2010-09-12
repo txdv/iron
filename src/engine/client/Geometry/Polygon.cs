@@ -20,14 +20,22 @@
 //     along with Iron.  If not, see <http://www.gnu.org/licenses/>.
 // 
 using System;
+using System.Runtime.InteropServices;
+
+using IronClient.Renderer;
 
 namespace IronClient.Geometry
 {
-	public enum MeshType
+	public class Polygon
 	{
-		TRIANGLES,
-		QUADS,
-		POLYGON
+		public Polygon ()
+		{
+		}
+		
+		public Vertex[] vertices;
+		public TexCoord[] texCoords0;
+		public TexCoord[] texCoords1;
+		public Material Material { get; set; }
 	}
 }
 
