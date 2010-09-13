@@ -43,7 +43,18 @@ namespace Iron.WADUtilsConsole
 			WADParser wadp = new WADParser(fs);
 			Console.WriteLine("Files in directory: {0}", wadp.FileCount);
 			
-			wadp.OnLoadFile += delegate(WADFile file) { };
+			MemoryStream ms = null;
+			bool firstFileLoad = false;
+			wadp.OnLoadFile += delegate(WADFile file) 
+			{
+				if (!firstFileLoad) {
+					Console.WriteLine ("Loading and extracting first file");
+					WADUtils.MipTexture mtex = wadp.LoadMipTexture(file);
+					
+					Console.WriteLine ("Loaded texture with size of {0}", wadp.LoadTexture1(file, mtex).Length);
+					firstFileLoad = true;
+				}
+			};
 			Console.WriteLine("Loading file information");
 			wadp.LoadFiles();
 			
@@ -68,7 +79,7 @@ namespace Iron.WADUtilsConsole
 				Console.WriteLine ("Loading Planes");
 				p.LoadPlanes();
 				
-				p.OnLoadMipTexture += delegate(MipTexture texture) { };
+				p.OnLoadMipTexture += delegate(BSPUtils.MipTexture texture) { };
 				if (p.LoadMipTextureOffsets())
 				{
 					Console.WriteLine ("Loading Mip Textures");

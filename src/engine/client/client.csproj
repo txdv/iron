@@ -69,6 +69,7 @@
     <Compile Include="Geometry\Polygon.cs" />
     <Compile Include="Geometry\TexCoord.cs" />
     <Compile Include="VFS\SizeStream.cs" />
+    <Compile Include="VFS\WAD.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -85,6 +86,10 @@
     <ProjectReference Include="..\libs\BSPUtils\BSPUtils.csproj">
       <Project>{57CDEF6B-0A16-4ECA-A9F3-C525984389C7}</Project>
       <Name>BSPUtils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\libs\WADUtils\WADUtils.csproj">
+      <Project>{F412E464-1625-4BA5-A309-BBFFF0F4E413}</Project>
+      <Name>WADUtils</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

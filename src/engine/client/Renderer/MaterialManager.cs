@@ -48,15 +48,11 @@ namespace IronClient.Renderer
 			byte[] textureData = new byte[texture.Size];
 			int iltexid = Il.ilGenImage();
 			int gltexid = 0;
-			int read = 1, readTotal = 0;
 			
 			
 			Il.ilBindImage(iltexid);
 			
-			while (read > 0) {
-				read = texture.InputStream.Read(textureData, readTotal, texture.Size);
-				readTotal += read;
-			}
+			texture.InputStream.Read(textureData, 0, texture.Size);
 			
 			if ((textureData[0] == 0x89) && (textureData[1] == 0x50)) {
 				Il.ilLoadL(Il.IL_PNG, textureData, texture.Size);
@@ -64,7 +60,11 @@ namespace IronClient.Renderer
 				Il.ilLoadL(Il.IL_JPG, textureData, texture.Size);
 			} else if ((textureData[0] == 'B') && (textureData[1] == 'M')) {
 				Il.ilLoadL(Il.IL_BMP, textureData, texture.Size);
+			} else {
+				Il.ilLoadL(Il.IL_WAL, textureData, texture.Size);
 			}
+			
+			// Il.IL_WAL
 			
 			Gl.glGenTextures(1, out gltexid);
 			Gl.glBindTexture(Gl.GL_TEXTURE_2D, gltexid);

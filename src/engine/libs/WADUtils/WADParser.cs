@@ -26,6 +26,40 @@ using Iron.BinaryExtensions;
 
 namespace Iron.WADUtils
 {
+	public struct MipTexture
+	{
+		public MipTexture(string name, int width, int height, int offset1, int offset2, int offset3, int offset4)
+		{
+			this.name = name;
+			
+			this.width = width;
+			this.height = height;
+			
+			this.offset1 = offset1;
+			this.offset2 = offset2;
+			this.offset3 = offset3;
+			this.offset4 = offset4;
+		}
+		
+		public string name;
+		
+		public int width;
+		public int height;
+		
+		public int TextureSize { get { return width * height; } }
+		public int DataSize { get { return TextureSize + TextureSize/4 + TextureSize/16 + TextureSize/32; } }
+		
+		public int offset1;
+		public int offset2;
+		public int offset3;
+		public int offset4;
+		
+		public static int Size
+		{
+			get { return 16 + 8 + 4 * 8; }
+		}
+	}
+	
 	public struct WADFile
 	{
 		public WADFile(uint offset, uint compressedFileSize, uint uncompressedFileSize,
@@ -59,6 +93,12 @@ namespace Iron.WADUtils
 			                   Encoding.ASCII.GetString(br.ReadBytes(16)).TrimEnd(new char[] { '\0' })
 			                   );
 		}
+		
+		public static MipTexture BReadMipTexture(this BinaryReader br)
+		{
+			return new MipTexture(Encoding.ASCII.GetString(br.ReadBytes(16)), br.BReadInt32(), br.BReadInt32(),
+			                      br.BReadInt32(), br.BReadInt32(), br.BReadInt32(), br.BReadInt32());
+		}	
 	}
 	
 	public class WADParser
@@ -69,14 +109,21 @@ namespace Iron.WADUtils
 		public static readonly string MagicString = "WAD3";
 		public static readonly int    MagicInt    = 1463895091;
 		
+		/// <summary>
+		/// Returns true if the magic number fits
+		/// </summary>
+		public bool Magic { get; set; }				
+		public uint Offset { get; set; }
+		public uint FileCount { get; set; }		
+		
 		private BinaryReader br;
 		
 		public WADParser(Stream stream)
 		{
 			br = new BinaryReader(stream);
 			
-			// TODO: through exception on fake magic
-			bool magic = CheckMagic(br.ReadBytes(4));
+			Magic = CheckMagic(br.ReadBytes(4));
+			
 			FileCount = br.BReadUInt32();
 			Offset = br.BReadUInt32();
 		}
@@ -112,8 +159,24 @@ namespace Iron.WADUtils
 			return br.ReadBytes((int)file.compressedFileSize);
 		}
 		
-		public uint Offset { get; set; }
-		public uint FileCount { get; set; }
+		public MipTexture LoadMipTexture(WADFile file)
+		{
+			//Console.WriteLine (file.offset);
+			br.BaseStream.Seek(file.offset, SeekOrigin.Begin);
+			return br.BReadMipTexture();
+		}
+		
+		public byte[] LoadTexture1(WADFile file, MipTexture texture)
+		{
+			br.BaseStream.Seek(file.offset + texture.offset1, SeekOrigin.Begin);
+			return br.ReadBytes(texture.width * texture.height);
+		}
+		
+		public Stream GetTextureStream(WADFile file, MipTexture texture)
+		{
+			br.BaseStream.Seek(file.offset + texture.offset1, SeekOrigin.Begin);
+			return br.BaseStream;
+		}
 	}
 }
 
