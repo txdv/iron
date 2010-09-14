@@ -19,15 +19,17 @@
 //     You should have received a copy of the GNU General Public License
 //     along with Iron.  If not, see <http://www.gnu.org/licenses/>.
 // 
+
 using System;
 using System.Runtime.InteropServices;
 
-namespace IronClient.Geometry
+namespace Iron.Client.Geometry
 {
 	[StructLayout(LayoutKind.Sequential)]
 	public struct TexCoord
 	{
-		public TexCoord(float u, float v) {
+		public TexCoord(float u, float v)
+		{
 			this.u = u; this.v = v;
 		}
 		

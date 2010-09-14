@@ -19,13 +19,13 @@
 //     You should have received a copy of the GNU General Public License
 //     along with Iron.  If not, see <http://www.gnu.org/licenses/>.
 // 
+
 using System;
-namespace client
+
+namespace Iron.Client
 {
 	public class Map
 	{
-			
-		
 		public Map ()
 		{
 			

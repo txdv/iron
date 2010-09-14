@@ -19,32 +19,34 @@
 //     You should have received a copy of the GNU General Public License
 //     along with Iron.  If not, see <http://www.gnu.org/licenses/>.
 // 
+
 using System;
 using System.IO;
-
 using Tao.DevIl;
 using Tao.OpenGl;
 
-using IronClient.VFS;
+using Iron.Client.VFS;
 
-namespace IronClient.Renderer
+namespace Iron.Client.Renderer
 {
 	public class MaterialManager
 	{
 		static MaterialManager instance;
 		
-		public static MaterialManager getInstance() {
+		public static MaterialManager getInstance()
+		{
 			if (instance != null)
 				return instance;
 			else return instance = new MaterialManager();
 		}
 		
-		private MaterialManager ()
+		private MaterialManager()
 		{
 			Il.ilInit();
 		}
 		
-		public Material CreateTextureMaterial(SizeStream texture) {
+		public Material CreateTextureMaterial(SizeStream texture)
+		{
 			byte[] textureData = new byte[texture.Size];
 			int iltexid = Il.ilGenImage();
 			int gltexid = 0;

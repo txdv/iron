@@ -19,11 +19,12 @@
 //     You should have received a copy of the GNU General Public License
 //     along with Iron.  If not, see <http://www.gnu.org/licenses/>.
 // 
+
 using System;
 using System.IO;
 using System.Collections.Generic;
 
-namespace IronClient.VFS
+namespace Iron.Client.VFS
 {
 	public class FileSystem
 	{

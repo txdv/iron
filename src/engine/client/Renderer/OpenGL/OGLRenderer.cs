@@ -19,23 +19,25 @@
 //     You should have received a copy of the GNU General Public License
 //     along with Iron.  If not, see <http://www.gnu.org/licenses/>.
 // 
+
 using System;
 using System.Runtime.InteropServices;
 using Tao.Glfw;
 using Tao.OpenGl;
 
-using IronClient.Geometry;
+using Iron.Client.Geometry;
 
-namespace IronClient.Renderer.OpenGL
+namespace Iron.Client.Renderer.OpenGL
 {
 	public class OGLRenderer : Renderer
 	{
-		public OGLRenderer ()
+		public OGLRenderer()
 		{
 			Glfw.glfwInit();
 		}
 		
-		public bool CreateWindow(int width, int height, bool fullscreen) {
+		public bool CreateWindow(int width, int height, bool fullscreen)
+		{
 			if (Glfw.glfwOpenWindow(width, height, 8, 8, 8, 0, 8, 0, fullscreen ? (Glfw.GLFW_FULLSCREEN) : (Glfw.GLFW_WINDOW)) == Gl.GL_FALSE) {
 				Glfw.glfwTerminate();
 				return false;
@@ -55,15 +57,18 @@ namespace IronClient.Renderer.OpenGL
 			return true;
 		}
 		
-		public bool IsOpen() {
+		public bool IsOpen()
+		{
 			return Glfw.glfwGetWindowParam(Glfw.GLFW_OPENED) == Gl.GL_TRUE;
 		}
 		
-		public void Close() {
+		public void Close()
+		{
 			Glfw.glfwTerminate();
 		}
 		
-		public void Clear() {
+		public void Clear()
+		{
 			Gl.glClear(Gl.GL_COLOR_BUFFER_BIT | Gl.GL_DEPTH_BUFFER_BIT);
 			
 			//Gl.glViewport     ( 0, 0, 800, 600 );
@@ -76,12 +81,14 @@ namespace IronClient.Renderer.OpenGL
 			
 		}
 		
-		public void Render() {
+		public void Render()
+		{
 			Glfw.glfwSwapBuffers();
 		}
 		
 		/* To be used for VBO binding */
-		public void RegisterPolygon(StaticMesh mesh) {
+		public void RegisterPolygon(StaticMesh mesh)
+		{
 			/*
 			Gl.glEnableClientState(Gl.GL_VERTEX_ARRAY);
 			Gl.glEnableClientState(Gl.GL_TEXTURE_COORD_ARRAY);
@@ -94,7 +101,8 @@ namespace IronClient.Renderer.OpenGL
 			Gl.glDisableClientState(Gl.GL_TEXTURE_COORD_ARRAY);*/
 		}
 		
-		public void DrawStaticMesh(StaticMesh mesh) {
+		public void DrawStaticMesh(StaticMesh mesh)
+		{
 			//uint buffer0, buffer1;
 			
 			if (mesh.Material.Type == Material.TEXTURE0) {

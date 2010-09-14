@@ -19,12 +19,14 @@
 //     You should have received a copy of the GNU General Public License
 //     along with Iron.  If not, see <http://www.gnu.org/licenses/>.
 // 
+
 using System;
 using System.IO;
 using System.Collections.Generic;
+
 using Iron.BSPUtils;
 
-namespace IronClient.VFS
+namespace Iron.Client.VFS
 {
 	public class BSPArchive : Archive
 	{
@@ -48,14 +50,14 @@ namespace IronClient.VFS
 			}
 		}
 		
-		public List<string> GetEntries ()
+		public List<string> GetEntries()
 		{
 			return entriesList;
 		}
 		
 		public SizeStream Get (string path)
 		{
-			throw new NotImplementedException ();
+			throw new NotImplementedException();
 		}
 	}
 }

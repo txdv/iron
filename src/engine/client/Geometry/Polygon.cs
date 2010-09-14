@@ -19,12 +19,13 @@
 //     You should have received a copy of the GNU General Public License
 //     along with Iron.  If not, see <http://www.gnu.org/licenses/>.
 // 
+
 using System;
 using System.Runtime.InteropServices;
 
-using IronClient.Renderer;
+using Iron.Client.Renderer;
 
-namespace IronClient.Geometry
+namespace Iron.Client.Geometry
 {
 	public class Polygon
 	{

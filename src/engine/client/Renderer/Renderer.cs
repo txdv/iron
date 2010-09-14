@@ -19,10 +19,11 @@
 //     You should have received a copy of the GNU General Public License
 //     along with Iron.  If not, see <http://www.gnu.org/licenses/>.
 // 
-using System;
-using IronClient.Geometry;
 
-namespace IronClient.Renderer
+using System;
+using Iron.Client.Geometry;
+
+namespace Iron.Client.Renderer
 {
 	public interface Renderer
 	{

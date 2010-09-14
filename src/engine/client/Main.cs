@@ -24,12 +24,13 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 using System.Drawing;
-using Iron.BSPUtils;
-using IronClient.Geometry;
-using IronClient.Renderer;
-using IronClient.VFS;
 using Tao.OpenGl;
 using Tao.Glfw;
+
+using Iron.BSPUtils;
+using Iron.Client.Geometry;
+using Iron.Client.Renderer;
+using Iron.Client.VFS;
 
 namespace IronClient
 {
@@ -146,11 +147,9 @@ namespace IronClient
 		private static ViewPoint vp = new ViewPoint();
 				
 		public static void Main (string[] args)
-		{	
-
+		{
 			
-			
-			IronClient.Renderer.Renderer renderer = new IronClient.Renderer.OpenGL.OGLRenderer();
+			Iron.Client.Renderer.Renderer renderer = new Iron.Client.Renderer.OpenGL.OGLRenderer();
 			
 			if (!renderer.CreateWindow(1280, 780, false))
 				return;

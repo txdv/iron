@@ -23,9 +23,10 @@
 using System;
 using System.IO;
 using System.Collections.Generic;
+
 using Iron.BSPUtils;
 
-namespace IronClient.VFS
+namespace Iron.Client.VFS
 {
 	public class WADArchive : Archive
 	{

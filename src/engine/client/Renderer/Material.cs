@@ -19,9 +19,10 @@
 //     You should have received a copy of the GNU General Public License
 //     along with Iron.  If not, see <http://www.gnu.org/licenses/>.
 // 
+
 using System;
 
-namespace IronClient.Renderer
+namespace Iron.Client.Renderer
 {
 	public class Material
 	{
@@ -32,7 +33,7 @@ namespace IronClient.Renderer
 		public int Type { get; set; } 
 		
 		private int texture0 = 0;
-		public int Texture0 { get { return texture0; }  }
+		public int Texture0 { get { return texture0; } }
 		
 		private int texture1 = 0;
 		public int Texture1 { get { return texture1; } }
@@ -44,7 +45,8 @@ namespace IronClient.Renderer
 			Type = type;
 		}
 		
-		public Material(int type, int texture0) {
+		public Material(int type, int texture0)
+		{
 			Type = type;
 			this.texture0 = texture0;
 		}
