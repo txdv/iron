@@ -66,10 +66,10 @@ namespace IronClient.Renderer.OpenGL
 		public void Clear() {
 			Gl.glClear(Gl.GL_COLOR_BUFFER_BIT | Gl.GL_DEPTH_BUFFER_BIT);
 			
-			Gl.glViewport     ( 0, 0, 800, 600 );
+			//Gl.glViewport     ( 0, 0, 800, 600 );
   			Gl.glMatrixMode   ( Gl.GL_PROJECTION );
 			Gl.glLoadIdentity();
-			Glu.gluPerspective ( 45.0f, 1.333333, 0.1f, 100.0 );
+			Glu.gluPerspective ( 45.0f, 1.333333, 0.1f, 100000.0 );
 			Gl.glMatrixMode   ( Gl.GL_MODELVIEW );
 			Gl.glLoadIdentity(); 
 			Gl.glTranslatef(-1.5f, 0.0f, -6.0f);

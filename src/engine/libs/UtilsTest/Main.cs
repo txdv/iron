@@ -21,7 +21,6 @@
 //
 using System;
 using System.IO;
-using Iron.WADUtils;
 using Iron.BSPUtils;
 
 namespace Iron.WADUtilsConsole
@@ -49,7 +48,7 @@ namespace Iron.WADUtilsConsole
 			{
 				if (!firstFileLoad) {
 					Console.WriteLine ("Loading and extracting first file");
-					WADUtils.MipTexture mtex = wadp.LoadMipTexture(file);
+					MipTexture mtex = wadp.LoadMipTexture(file);
 					
 					Console.WriteLine ("Loaded texture with size of {0}", wadp.LoadTexture1(file, mtex).Length);
 					firstFileLoad = true;

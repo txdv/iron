@@ -18,96 +18,15 @@
 // 
 //     You should have received a copy of the GNU General Public License
 //     along with Iron.  If not, see <http://www.gnu.org/licenses/>.
-//
+// 
+
 using System;
 using System.IO;
 using System.Text;
 using Iron.BinaryExtensions;
 
-namespace Iron.WADUtils
+namespace Iron.BSPUtils
 {
-	public struct MipTexture
-	{
-		public MipTexture(string name, int width, int height, int offset1, int offset2, int offset3, int offset4)
-		{
-			this.name = name;
-			
-			this.width = width;
-			this.height = height;
-			
-			this.offset1 = offset1;
-			this.offset2 = offset2;
-			this.offset3 = offset3;
-			this.offset4 = offset4;
-		}
-		
-		public string name;
-		
-		public int width;
-		public int height;
-		
-		public int offset1;
-		public int offset2;
-		public int offset3;
-		public int offset4;
-		
-		public int TextureSize1 { get { return width * height; } }
-		public int TextureSize2 { get { return width * height/4; } }
-		public int TextureSize3 { get { return width * height/4/4; } }
-		public int TextureSize4 { get { return width * height/4/4/4; } }
-		
-		public int DataSize { get { return TextureSize1 + TextureSize2 + TextureSize3 + TextureSize4; } }
-		
-		public static int Size
-		{
-			get { return 16 + 8 + 4 * 8; }
-		}
-	}
-	
-	public struct WADFile
-	{
-		public WADFile(uint offset, uint compressedFileSize, uint uncompressedFileSize,
-		               byte fileType, byte compressionType, byte padding, byte padding2, string filename)
-		{
-			this.offset = offset;
-			this.compressedFileSize = compressedFileSize;
-			this.uncomrepssedFileSize = uncompressedFileSize;
-			this.fileType = fileType;
-			this.compressionType = compressionType;
-			this.padding = padding;
-			this.padding2 = padding;
-			this.filename = filename;
-		}
-		
-		public uint offset;
-		public uint compressedFileSize;
-		public uint uncomrepssedFileSize;
-		public byte fileType;
-		public byte compressionType;
-		public byte padding;
-		public byte padding2;
-		public string filename;
-		
-		public static int Size { get { return 4 + 4 + 4 + 4 + 16; } } 
-	}
-	
-	public static class BinaryReaderExtensions
-	{
-		public static WADFile ReadWADFile(this BinaryReader br)
-		{
-			return new WADFile(br.BReadUInt32(), br.BReadUInt32(), br.BReadUInt32(), br.ReadByte(), 
-			                   br.ReadByte(), br.ReadByte(), br.ReadByte(), 
-			                   Encoding.ASCII.GetString(br.ReadBytes(16)).TrimEnd(new char[] { '\0' })
-			                   );
-		}
-		
-		public static MipTexture BReadMipTexture(this BinaryReader br)
-		{
-			return new MipTexture(Encoding.ASCII.GetString(br.ReadBytes(16)).TrimEnd(new char[] { '\0' }), br.BReadInt32(), br.BReadInt32(),
-			                      br.BReadInt32(), br.BReadInt32(), br.BReadInt32(), br.BReadInt32());
-		}	
-	}
-	
 	public class WADParser
 	{
 		public delegate void LoadFileDelegate(WADFile file);
@@ -227,6 +146,4 @@ namespace Iron.WADUtils
 			br.BaseStream.Seek(file.offset + texture.offset1, SeekOrigin.Begin);
 			return br.BaseStream;
 		}
-	}
-}
-
+	}}

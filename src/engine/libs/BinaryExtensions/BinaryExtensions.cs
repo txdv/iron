@@ -23,9 +23,7 @@ using System;
 using System.IO;
 
 namespace Iron.BinaryExtensions
-{	
-	// TODO: Create little endian functions
-	
+{		
 	public static class BinaryReaderExtensions
 	{
 		#region Big Endian
