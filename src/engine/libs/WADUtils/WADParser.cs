@@ -46,13 +46,17 @@ namespace Iron.WADUtils
 		public int width;
 		public int height;
 		
-		public int TextureSize { get { return width * height; } }
-		public int DataSize { get { return TextureSize + TextureSize/4 + TextureSize/16 + TextureSize/32; } }
-		
 		public int offset1;
 		public int offset2;
 		public int offset3;
 		public int offset4;
+		
+		public int TextureSize1 { get { return width * height; } }
+		public int TextureSize2 { get { return width * height/4; } }
+		public int TextureSize3 { get { return width * height/4/4; } }
+		public int TextureSize4 { get { return width * height/4/4/4; } }
+		
+		public int DataSize { get { return TextureSize1 + TextureSize2 + TextureSize3 + TextureSize4; } }
 		
 		public static int Size
 		{
@@ -74,6 +78,7 @@ namespace Iron.WADUtils
 			this.padding2 = padding;
 			this.filename = filename;
 		}
+		
 		public uint offset;
 		public uint compressedFileSize;
 		public uint uncomrepssedFileSize;
@@ -82,6 +87,8 @@ namespace Iron.WADUtils
 		public byte padding;
 		public byte padding2;
 		public string filename;
+		
+		public static int Size { get { return 4 + 4 + 4 + 4 + 16; } } 
 	}
 	
 	public static class BinaryReaderExtensions
@@ -96,7 +103,7 @@ namespace Iron.WADUtils
 		
 		public static MipTexture BReadMipTexture(this BinaryReader br)
 		{
-			return new MipTexture(Encoding.ASCII.GetString(br.ReadBytes(16)), br.BReadInt32(), br.BReadInt32(),
+			return new MipTexture(Encoding.ASCII.GetString(br.ReadBytes(16)).TrimEnd(new char[] { '\0' }), br.BReadInt32(), br.BReadInt32(),
 			                      br.BReadInt32(), br.BReadInt32(), br.BReadInt32(), br.BReadInt32());
 		}	
 	}
@@ -141,6 +148,13 @@ namespace Iron.WADUtils
 			}
 		}
 		
+		public WADFile LoadFile(int index)
+		{
+			if ((index < 0) || (index > FileCount)) throw new Exception("Out of range");
+			br.BaseStream.Seek(Offset + WADFile.Size * index, SeekOrigin.Begin);
+			return br.ReadWADFile();
+		}
+		
 		public static bool CheckMagic(byte[] bytes)
 		{
 			return CheckMagic(bytes, 0);
@@ -161,7 +175,6 @@ namespace Iron.WADUtils
 		
 		public MipTexture LoadMipTexture(WADFile file)
 		{
-			//Console.WriteLine (file.offset);
 			br.BaseStream.Seek(file.offset, SeekOrigin.Begin);
 			return br.BReadMipTexture();
 		}
@@ -169,7 +182,44 @@ namespace Iron.WADUtils
 		public byte[] LoadTexture1(WADFile file, MipTexture texture)
 		{
 			br.BaseStream.Seek(file.offset + texture.offset1, SeekOrigin.Begin);
-			return br.ReadBytes(texture.width * texture.height);
+			return br.ReadBytes(texture.TextureSize1);
+		}
+		
+		public byte[] LoadTexture2(WADFile file, MipTexture texture)
+		{
+			br.BaseStream.Seek(file.offset + texture.offset2, SeekOrigin.Begin);
+			return br.ReadBytes(texture.width * texture.height / 4);
+		}
+
+		public byte[] LoadTexture3(WADFile file, MipTexture texture)
+		{
+			br.BaseStream.Seek(file.offset + texture.offset3, SeekOrigin.Begin);
+			return br.ReadBytes(texture.width * texture.height / 16);
+		}
+		
+		public byte[] LoadTexture4(WADFile file, MipTexture texture)
+		{
+			br.BaseStream.Seek(file.offset + texture.offset4, SeekOrigin.Begin);
+			return br.ReadBytes(texture.width * texture.height / 64);
+		}
+		
+		public byte[][] LoadPallete(WADFile file, MipTexture texture)
+		{
+			br.BaseStream.Seek(file.offset + texture.offset1 + texture.DataSize + 2, SeekOrigin.Begin);
+			byte[][] ret = new byte[256][];
+			for (int i = 0; i < 256; i++)
+			{
+				ret[i] = new byte[3];
+				ret[i][0] = br.ReadByte();
+				ret[i][1] = br.ReadByte();
+				ret[i][2] = br.ReadByte();
+				
+			}
+			return ret;
+		}
+		public int GetColorsFromPallete(byte[][] pallette)
+		{
+			return 0;
 		}
 		
 		public Stream GetTextureStream(WADFile file, MipTexture texture)

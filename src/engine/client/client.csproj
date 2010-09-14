@@ -50,6 +50,8 @@
       <HintPath>..\..\..\taoframework-2.1.0\bin\Tao.DevIl.dll</HintPath>
     </Reference>
     <Reference Include="ICSharpCode.SharpZipLib" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Main.cs" />
@@ -70,6 +72,7 @@
     <Compile Include="Geometry\TexCoord.cs" />
     <Compile Include="VFS\SizeStream.cs" />
     <Compile Include="VFS\WAD.cs" />
+    <Compile Include="VFS\BSP.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

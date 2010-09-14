@@ -1,4 +1,4 @@
-3// 
+// 
 //     This file is part of Iron.
 //     Iron is an extensive game engine written in C# aiming to
 //     utilize already exitent game content 
@@ -22,8 +22,10 @@
 using System;
 using System.IO;
 using System.Collections.Generic;
+using System.Drawing;
 
 using Iron.BSPUtils;
+using Iron.WADUtils;
 using IronClient.Geometry;
 using IronClient.Renderer;
 using IronClient.VFS;
@@ -32,6 +34,21 @@ using Tao.Glfw;
 
 namespace IronClient
 {
+	public static class HexExtensions
+	{
+		public static string ToHex(this int i)
+		{
+			return string.Format("0x{0}", Convert.ToString(i, 16));
+		}
+		public static string ToHex(this uint i)
+		{
+			return string.Format("0x{0}", Convert.ToString(i, 16));
+		}
+		public static string ToHex(this long i)
+		{
+			return string.Format("0x{0}", Convert.ToString(i, 16));
+		}
+	}
 	public class ViewPoint
 	{
 		public ViewPoint()
@@ -77,7 +94,7 @@ namespace IronClient
 			{
 				for (int j = 0; j < 2; j++)
 				{
-					if (Translation[i][j]) TranslationValue[i] += (j == 1 ? 1.0f : -1.0f);	
+					if (Translation[i][j]) TranslationValue[i] += (j == 1 ? 0.1f : -0.1f);	
 					if (Rotation[i][j]) RotationValue[i] += (j == 1 ? 1.0f : -1.0f);
 				}
 			}
@@ -103,9 +120,9 @@ namespace IronClient
 				break;
 			case (int)'Z':
 				if (Shift) {
-					Translation[2][0] = action == 1;
+					Rotation[2][0] = action == 1;
 				} else {
-					Translation[2][1] = action == 1;	
+					Rotation[2][1] = action == 1;	
 				}
 				
 				break;
@@ -143,10 +160,71 @@ namespace IronClient
 		private static bool sizedown = false;
 		private static float size = 1.0f;
 		private static ViewPoint vp = new ViewPoint();
-
-
-		public static void Main (string[] args)
+		
+		private static long describeLast = 0;
+		public static void Describe(WADFile wf, Iron.WADUtils.MipTexture mt)
 		{
+			Console.WriteLine ("Tarpas: {0}",(wf.offset - describeLast).ToHex() );
+			Console.WriteLine ("WADFile: {0}", wf.filename);			
+			Console.WriteLine ("\tOffset:{0}", wf.offset.ToHex());
+			Console.WriteLine ("MipTexture {0} {1}x{2}", mt.name, mt.width, mt.height);
+			
+			Console.WriteLine ("\tTextureSizes: {0} {1} {2} {3}", mt.TextureSize1.ToHex(), mt.TextureSize2.ToHex(), mt.TextureSize3.ToHex(), mt.TextureSize4.ToHex());
+			Console.WriteLine ("\tDataSize: {0}", mt.DataSize.ToHex());
+			Console.WriteLine ("\toffset1 start: {0}\t{1}", mt.offset1.ToHex(), (wf.offset + mt.offset1).ToHex());
+			Console.WriteLine ("\toffset1   end: {0}\t{1}", (mt.offset1 + mt.TextureSize1).ToHex(), (wf.offset + mt.offset1 + mt.TextureSize1).ToHex()); 
+			Console.WriteLine ("\toffset2 start: {0}\t{1}", mt.offset2.ToHex(), (wf.offset + mt.offset2).ToHex());
+			Console.WriteLine ("\toffset2   end: {0}\t{1}", (mt.offset2 + mt.TextureSize2).ToHex(), (wf.offset + mt.offset2 + mt.TextureSize1).ToHex()); 
+			Console.WriteLine ("\toffset3 start: {0}\t{1}", mt.offset3.ToHex(), (wf.offset + mt.offset3).ToHex());
+			Console.WriteLine ("\toffset3   end: {0}\t{1}", (mt.offset3 + mt.TextureSize3).ToHex(), (wf.offset + mt.offset3 + mt.TextureSize1).ToHex()); 
+			Console.WriteLine ("\toffset4 start: {0}\t{1}", mt.offset4.ToHex(), (wf.offset + mt.offset4).ToHex());
+			Console.WriteLine ("\toffset4   end: {0}\t{1}", (mt.offset4 + mt.TextureSize4).ToHex(), (wf.offset + mt.offset4 + mt.TextureSize4).ToHex()); 						
+			describeLast = (wf.offset + mt.offset4 + mt.TextureSize4);
+			
+			Console.WriteLine ();
+		}
+		
+		public static void ConvertToPNG(WADParser wp, Iron.WADUtils.WADFile wf, Iron.WADUtils.MipTexture mt, string name)
+		{
+			byte[] texture = wp.LoadTexture1(wf, mt);
+			byte[][] palette = wp.LoadPallete(wf, mt);
+			
+			Console.WriteLine ("{0}x{1}", mt.width, mt.height);
+			Console.WriteLine ("{0}", texture.Length);
+			
+			Bitmap b = new Bitmap(mt.width, mt.height);
+			for (int i = 0; i < b.Width; i++)
+			{
+				for (int j = 0; j < b.Height; j++)
+				{
+					int index = mt.width * j + i;
+					int color = texture[index];
+					//int color = texture[i * mt.height * j];
+					byte[] colors = palette[color];		
+					
+					//Console.WriteLine ("color({0}) = rgb({1},{2},{3})", color, colors[0], colors[1], colors[2]);
+					
+					b.SetPixel(i, j, System.Drawing.Color.FromArgb(colors[0], colors[1], colors[2]));
+				}
+			}
+			b.Save(name);
+		}
+		
+		public static void Main (string[] args)
+		{	
+			WADParser wp = new WADParser(File.OpenRead("halflife.wad"));
+			WADFile f;
+			
+			/*
+			for (int i = 0; i < wp.FileCount; i++)
+			{
+				f = wp.LoadFile(i);
+				Iron.WADUtils.MipTexture mt = wp.LoadMipTexture(f);
+				ConvertToPNG(wp, f, mt, string.Format("halflife{0}.png", i));
+			}
+			*/
+			
+			
 			IronClient.Renderer.Renderer renderer = new IronClient.Renderer.OpenGL.OGLRenderer();
 			
 			if (!renderer.CreateWindow(1280, 780, false))
@@ -166,8 +244,7 @@ namespace IronClient
 			
 			List<Vector3f> vertexList = new List<Vector3f>();
 			List<Edge> edgeList = new List<Edge>();
-			BSPParser p = new BSPParser(File.OpenRead("datacore.bsp"));
-			
+			BSPParser p = new BSPParser(File.OpenRead("datacore.bsp"));			
 			
 			if (p.LoadDirectoryTables())
 			{
@@ -248,6 +325,9 @@ namespace IronClient
 		{
 			// TODO: get rid of opengl code
 			
+						
+			Gl.glLineWidth(5.0f);
+			
             // Draw the positive side of the lines x,y,z
 	        Gl.glBegin(Gl.GL_LINES);
             Gl.glColor3f(0.0f, 1.0f, 0.0f);                // Green for x axis
@@ -280,6 +360,8 @@ namespace IronClient
 			Gl.glDisable(Gl.GL_LINE_STIPPLE);
 			Gl.glColor3f(1.0f, 1.0f, 1.0f);
 
+			Gl.glLineWidth(1.0f);
+			
 		}
 	}
 }

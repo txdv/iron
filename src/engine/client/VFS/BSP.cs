@@ -22,54 +22,41 @@
 using System;
 using System.IO;
 using System.Collections.Generic;
-using Iron.WADUtils;
+using Iron.BSPUtils;
+
 namespace IronClient.VFS
 {
-	public class WADArchive : Archive
+	public class BSPArchive : Archive
 	{
-		WADParser wp;
-		List<WADFile> wadList;
+		BSPParser bp;
+		
 		List<string> entriesList;
 		
-		
-		public WADArchive(string filename)
+		public BSPArchive(string filename)
 		{
 			FileStream fs = File.OpenRead(filename);
-			wp = new WADParser(fs);
-			if (!wp.Magic) throw new Exception("WAD file magic missmatch");
+			bp = new BSPParser(fs);
 			
-			wadList = new List<WADFile>();
 			entriesList = new List<string>();
-			
-			wp.OnLoadFile += delegate(WADFile file) { 
-				wadList.Add(file);
-				entriesList.Add(file.filename); 
-			};
-			
-			wp.LoadFiles();
-						
+			if (bp.LoadDirectoryTables())
+			{
+				bp.OnLoadMipTexture += delegate(MipTexture texture) {		
+					entriesList.Add(texture.name);
+				};
+				
+				bp.LoadMipTextures();
+			}
 		}
 		
-		public List<string> GetEntries()
-		{			
+		public List<string> GetEntries ()
+		{
 			return entriesList;
 		}
 		
-		public SizeStream Get(string path)
+		public SizeStream Get (string path)
 		{
-			foreach (WADFile file in wadList) {
-				if (file.filename == path) {
-					// Load all data
-					//MemoryStream ms = new MemoryStream(wp.LoadFile(file));
-					//return new SizeStream(ms, (int)ms.Length);
-					
-					// Load only offset
-					//MipTexture mtex = wp.LoadMipTexture(file);					
-					//return new SizeStream(wp.GetTextureStream(file, mtex), mtex.TextureSize);
-				}
-			}
-			return null;
+			throw new NotImplementedException ();
 		}
-		
 	}
 }
+
