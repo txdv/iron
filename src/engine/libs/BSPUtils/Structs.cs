@@ -39,12 +39,12 @@ namespace Iron.BSPUtils
 		
 		public static DirectoryEntry BReadDirectoryEntry(this BinaryReader br)
 		{
-			return new DirectoryEntry(br.BReadInt32(), br.BReadInt32());
+			return new DirectoryEntry(br.LReadInt32(), br.LReadInt32());
 		}
 		
 		public static float BReadFloat(this BinaryReader br)
 		{
-			return Convert.ToSingle(br.BReadInt32());
+			return Convert.ToSingle(br.LReadInt32());
 		}
 		
 		public static BoundBoxShort BReadBoundBoxShort(this BinaryReader br)
@@ -54,7 +54,7 @@ namespace Iron.BSPUtils
 		
 		public static BSPNode BReadBSPNode(this BinaryReader br)
 		{
-			return new BSPNode(br.BReadInt32(), br.ReadUInt16(), br.ReadUInt16(),
+			return new BSPNode(br.LReadInt32(), br.ReadUInt16(), br.ReadUInt16(),
 			                   br.BReadBoundBoxShort(), br.ReadUInt16(), br.ReadUInt16());
 		}
 		
@@ -62,30 +62,30 @@ namespace Iron.BSPUtils
 		{
 			return new FaceTextureInfo(br.ReadVector3f(),br.BReadFloat(),
                                        br.ReadVector3f(), br.BReadFloat(),
-                                       br.BReadUInt32(), br.BReadUInt32());
+                                       br.LReadUInt32(), br.LReadUInt32());
 		}
 		
 		public static Face BReadFace(this BinaryReader br)
 		{
-			return new Face(br.BReadUInt16(), br.BReadUInt16(), br.BReadUInt32(), br.BReadUInt16(),
-			                br.BReadUInt16(), br.ReadByte(), br.ReadByte(), br.ReadByte(), br.ReadByte(),
+			return new Face(br.LReadUInt16(), br.LReadUInt16(), br.LReadUInt32(), br.LReadUInt16(),
+			                br.LReadUInt16(), br.ReadByte(), br.ReadByte(), br.ReadByte(), br.ReadByte(),
 			                br.ReadInt32());
 		}
 		
 		public static ClipNode BReadClipNode(this BinaryReader br)
 		{
-			return new ClipNode(br.BReadUInt32(), br.BReadInt16(), br.BReadInt16());
+			return new ClipNode(br.LReadUInt32(), br.LReadInt16(), br.LReadInt16());
 		}
 		
 		public static BSPLeaf BReadBSPLeaf(this BinaryReader br)
 		{
-			return new BSPLeaf(br.ReadInt32(), br.ReadInt32(), br.BReadBoundBoxShort(), br.BReadUInt16(),
-			                   br.BReadUInt16(), br.ReadByte(), br.ReadByte(), br.ReadByte(), br.ReadByte());
+			return new BSPLeaf(br.ReadInt32(), br.ReadInt32(), br.BReadBoundBoxShort(), br.LReadUInt16(),
+			                   br.LReadUInt16(), br.ReadByte(), br.ReadByte(), br.ReadByte(), br.ReadByte());
 		}
 		
 		public static Edge BReadEdge(this BinaryReader br)
 		{
-			return new Edge(br.BReadUInt16(), br.BReadUInt16());
+			return new Edge(br.LReadUInt16(), br.LReadUInt16());
 		}
 		
 		public static BoundBox BReadBoundBox(this BinaryReader br)
@@ -102,7 +102,7 @@ namespace Iron.BSPUtils
 
 		public static WADFile ReadWADFile(this BinaryReader br)
 		{
-			return new WADFile(br.BReadUInt32(), br.BReadUInt32(), br.BReadUInt32(), br.ReadByte(), 
+			return new WADFile(br.LReadUInt32(), br.LReadUInt32(), br.LReadUInt32(), br.ReadByte(), 
 			                   br.ReadByte(), br.ReadByte(), br.ReadByte(), 
 			                   Encoding.ASCII.GetString(br.ReadBytes(16)).TrimEnd(new char[] { '\0' })
 			                   );
@@ -110,8 +110,8 @@ namespace Iron.BSPUtils
 		
 		public static MipTexture BReadMipTexture(this BinaryReader br)
 		{
-			return new MipTexture(Encoding.ASCII.GetString(br.ReadBytes(16)).TrimEnd(new char[] { '\0' }), br.BReadInt32(), br.BReadInt32(),
-			                      br.BReadInt32(), br.BReadInt32(), br.BReadInt32(), br.BReadInt32());
+			return new MipTexture(Encoding.ASCII.GetString(br.ReadBytes(16)).TrimEnd(new char[] { '\0' }), br.LReadInt32(), br.LReadInt32(),
+			                      br.LReadInt32(), br.LReadInt32(), br.LReadInt32(), br.LReadInt32());
 		}	
 		
 		#endregion

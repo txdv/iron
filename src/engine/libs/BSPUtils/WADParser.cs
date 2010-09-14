@@ -50,8 +50,8 @@ namespace Iron.BSPUtils
 			
 			Magic = CheckMagic(br.ReadBytes(4));
 			
-			FileCount = br.BReadUInt32();
-			Offset = br.BReadUInt32();
+			FileCount = br.LReadUInt32();
+			Offset = br.LReadUInt32();
 		}
 		
 		public void LoadFiles()

@@ -81,7 +81,7 @@ namespace Iron.BSPUtils
 		{
 			try 
 			{
-				Version = br.BReadInt32();
+				Version = br.LReadInt32();
 				
 				// directories
 				Entities       = br.BReadDirectoryEntry();
@@ -127,7 +127,7 @@ namespace Iron.BSPUtils
 				Plane p;
 				p.normal = br.ReadVector3f();
 				p.distance = br.ReadSingle();
-				p.type = br.BReadInt32();
+				p.type = br.LReadInt32();
 				if (OnLoadPlane != null) OnLoadPlane(p);
 			}
 			return true;
@@ -136,9 +136,9 @@ namespace Iron.BSPUtils
 		public bool LoadMipTextureOffsets()
 		{
 			br.BaseStream.Seek(MipTextures.offset, SeekOrigin.Begin);
-			int size = br.BReadInt32();
+			int size = br.LReadInt32();
 			MipTextureOffsets = new int[size];
-			for (int j = 0; j < size; j++) MipTextureOffsets[j] = br.BReadInt32();
+			for (int j = 0; j < size; j++) MipTextureOffsets[j] = br.LReadInt32();
 			return true;
 		}
 		public bool LoadMipTextures()
@@ -234,7 +234,7 @@ namespace Iron.BSPUtils
 			{
 				br.BaseStream.Seek(FaceList.offset, SeekOrigin.Begin);
 				for (int i = FaceList.offset; i < FaceList.offset + FaceList.size; i+= Face.Size)
-					OnLoadFaceListElement(br.BReadInt16());
+					OnLoadFaceListElement(br.LReadInt16());
 			}
 			return true;
 		}
@@ -256,7 +256,7 @@ namespace Iron.BSPUtils
 			{
 				br.BaseStream.Seek(EdgeList.offset, SeekOrigin.Begin);
 				for (int i = EdgeList.offset; i < EdgeList.offset + EdgeList.size; i += 2)
-					OnLoadEdgeListElement(br.BReadInt16());
+					OnLoadEdgeListElement(br.LReadInt16());
 			}
 			return true;
 		}
