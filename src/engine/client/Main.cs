@@ -163,7 +163,7 @@ namespace IronClient
 						
 			FileSystem fs = FileSystem.GetInstance();
 			fs.AddArchive(new WADArchive("halflife.wad"));
-			//mesh.Material = MaterialManager.getInstance().CreateTextureMaterial(fs.Get("{GRASS1"));
+			mesh.Material = MaterialManager.getInstance().CreateTextureMaterial(fs.Get("{GRASS1"));
 			
 			List<Vector3f> vertexList = new List<Vector3f>();
 			List<Edge> edgeList = new List<Edge>();
@@ -213,7 +213,7 @@ namespace IronClient
 				AdjustView();
 				vp.Update();
 								
-				//renderer.DrawStaticMesh(mesh);
+				renderer.DrawStaticMesh(mesh);
 				
 				renderer.Render();
 			}

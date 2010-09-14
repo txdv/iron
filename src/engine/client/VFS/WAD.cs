@@ -22,6 +22,7 @@
 
 using System;
 using System.IO;
+using System.Drawing;
 using System.Collections.Generic;
 
 using Iron.BSPUtils;
@@ -62,13 +63,12 @@ namespace Iron.Client.VFS
 		{
 			foreach (WADFile file in wadList) {
 				if (file.filename == path) {
-					// Load all data
-					//MemoryStream ms = new MemoryStream(wp.LoadFile(file));
-					//return new SizeStream(ms, (int)ms.Length);
-					
-					// Load only offset
-					//MipTexture mtex = wp.LoadMipTexture(file);					
-					//return new SizeStream(wp.GetTextureStream(file, mtex), mtex.TextureSize);
+					Bitmap bmp = Debugger.ConvertToPNG(wp, file, wp.LoadMipTexture(file));
+					// TODO: ommit saving into memory?
+					MemoryStream ms = new MemoryStream();
+					bmp.Save(ms, System.Drawing.Imaging.ImageFormat.Bmp);
+					ms.Seek(0, SeekOrigin.Begin);
+					return new SizeStream(ms, (int)ms.Length);
 				}
 			}
 			return null;
